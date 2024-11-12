@@ -95,3 +95,33 @@ This project is open source and available under the MIT License.
 
 ## Contributing
 Contributions are welcome! Feel free to submit issues and pull requests.
+
+## Project Structure
+```
+CiaoClipBoard/
+├── CiaoClipBoard.html     # Standalone web application
+├── README.md              # Documentation
+└── ChromeExtensionVersion/# Chrome extension variant
+    ├── manifest.json      # Extension configuration
+    ├── bubble.css         # Extension styles
+    ├── bubble.js          # Extension functionality
+    └── icons/            # Extension icons
+```
+
+## Variants
+
+### 1. Standalone Web Application
+- Single HTML file (`CiaoClipBoard.html`)
+- No installation required
+- Works in any modern browser
+- Offline capable
+
+### 2. Chrome Extension Version
+- Located in `ChromeExtensionVersion/` directory
+- Floating bubble interface
+- Always accessible while browsing
+- Installation steps:
+  1. Open Chrome Extensions (chrome://extensions/)
+  2. Enable Developer Mode
+  3. Click "Load unpacked"
+  4. Select the `ChromeExtensionVersion` folder
