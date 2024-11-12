@@ -3,6 +3,9 @@
 ## Overview
 CiaoClipBoard is a lightweight web application designed to enhance user privacy by providing instant clipboard content cleaning. With a simple click, users can automatically clear their clipboard contents after 1 second, helping protect sensitive information across various devices including laptops, mobile phones, and other network-connected devices.
 
+## Demo
+Try it now: [CiaoClipBoard Demo](https://ciaoclipboard.pages.dev/CiaoClipBoard)
+
 ## Features
 - One-click clipboard cleaning
 - 1-second automatic clearing delay
@@ -84,11 +87,14 @@ Works with all modern browsers that support:
 No installation required! Simply download the single self-contained `CiaoClipBoard.html` file and open it in your browser. Everything, including the animated logo, is contained within this single file.
 
 ## Privacy Policy
-- No data collection
-- All data stored locally
-- No external connections
+- No data collection or external transmission
+- All operations performed locally on your device
+- Usage statistics stored only in local storage
 - No cookies used
 - No user tracking
+- No external dependencies
+- Complete privacy protection
+- Data can be cleared through browser settings
 
 ## License
 This project is open source and available under the MIT License.

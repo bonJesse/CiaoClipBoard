@@ -291,7 +291,7 @@
                 </path>
             </g>
         </svg>
-        <h1>CiaoClipBoard</h1>
+        <h1>CiaoClipBoard_V1.0.1</h1>
         <p>Say goodbye to clipboard content with one click!</p>
     </div>
 
@@ -392,7 +392,7 @@
 
             if (firstUsed && usageCount > 0) {
                 const daysSinceFirst = (new Date() - new Date(firstUsed)) / (1000 * 60 * 60 * 24);
-                const frequency = (usageCount / Math.max(1, daysSinceFirst)).toFixed(2);
+                const frequency = Math.round(usageCount / Math.max(1, daysSinceFirst));
                 frequencyElement.textContent = frequency;
             }
         }
