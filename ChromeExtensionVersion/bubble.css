@@ -2,90 +2,205 @@
     position: fixed;
     right: 20px;
     bottom: 20px;
-    z-index: 999999;
-    font-family: -apple-system, system-ui, sans-serif;
+    z-index: 10000;
+    user-select: none;
+    touch-action: none;
+    transition: transform 0.05s ease-out;
+    will-change: transform;
+}
+
+#ciaoclipboard-bubble.dragging {
+    transition: none !important;
+    cursor: grabbing;
+}
+
+#ciaoclipboard-bubble.dragging .bubble-button {
+    transform: scale(0.95);
+    box-shadow: 
+        0 8px 25px rgba(79, 184, 201, 0.4),
+        inset 0 -2px 5px rgba(0,0,0,0.2),
+        inset 0 2px 5px rgba(255,255,255,0.4);
 }
 
 .bubble-button {
     width: 48px;
     height: 48px;
-    border-radius: 24px;
-    background: #007AFF;
+    border-radius: 50%;
     border: none;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0,122,255,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
+    cursor: grab;
+    background: linear-gradient(135deg, #4FB8C9, #8CD790);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 15px rgba(79, 184, 201, 0.3),
+        inset 0 -2px 5px rgba(0,0,0,0.2),
+        inset 0 2px 5px rgba(255,255,255,0.4);
+    transform: perspective(500px) rotateX(10deg);
+    will-change: transform;
+}
+
+.bubble-button::before,
+.bubble-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 70%
+    );
+    transform: translateX(-100%);
+    animation: lightEffect 3s infinite;
+}
+
+.bubble-button::after {
+    animation-delay: 1.5s;
+}
+
+@keyframes lightEffect {
+    0% {
+        transform: translateX(-100%) skewX(-15deg);
+    }
+    100% {
+        transform: translateX(200%) skewX(-15deg);
+    }
 }
 
 .bubble-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,122,255,0.4);
+    transform: perspective(500px) rotateX(10deg) scale(1.05);
+    background: linear-gradient(135deg, #5BC3D5, #98E39B);
+    box-shadow: 
+        0 6px 20px rgba(79, 184, 201, 0.4),
+        inset 0 -2px 5px rgba(0,0,0,0.2),
+        inset 0 2px 5px rgba(255,255,255,0.4);
+}
+
+.bubble-button:active {
+    transform: perspective(500px) rotateX(10deg) scale(0.95);
+    transition: all 0.1s;
 }
 
 .bubble-panel {
     position: absolute;
     bottom: 60px;
     right: 0;
-    width: 240px;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    padding: 16px;
-    transform: scale(0);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.1),
+        0 1px 8px rgba(0,0,0,0.05);
+    backdrop-filter: blur(10px);
+    display: none;
+    min-width: 200px;
     transform-origin: bottom right;
-    transition: transform 0.3s;
+    transform: perspective(500px) rotateX(5deg) scale(0.95);
     opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .bubble-panel.show {
-    transform: scale(1);
+    display: block;
     opacity: 1;
+    transform: perspective(500px) rotateX(0) scale(1);
 }
 
 .clear-button {
     width: 100%;
-    padding: 12px;
-    border-radius: 12px;
+    padding: 10px;
     border: none;
-    background: #007AFF;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
     color: white;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 12px;
     cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 2px 8px rgba(255,107,107,0.3),
+        inset 0 -2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-.stats-info {
-    font-size: 12px;
-    color: #8E8E93;
-    margin: 4px 0;
-    display: flex;
-    justify-content: space-between;
+.clear-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 70%
+    );
+    transform: translateX(-100%);
+    animation: buttonLight 2s infinite;
+}
+
+@keyframes buttonLight {
+    0% {
+        transform: translateX(-100%) skewX(-15deg);
+    }
+    100% {
+        transform: translateX(200%) skewX(-15deg);
+    }
+}
+
+.clear-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #FF7B7B, #FF9E9E);
+    box-shadow: 
+        0 4px 12px rgba(255,107,107,0.4),
+        inset 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.clear-button:active {
+    transform: translateY(1px) scale(0.98);
 }
 
 .success-message {
-    color: #34C759;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background: rgba(75, 185, 175, 0.95);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 12px rgba(75, 185, 175, 0.3);
 }
 
 .success-message.show {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
 
-@media (prefers-color-scheme: dark) {
-    .bubble-panel {
-        background: #1c1c1e;
-        color: white;
+.stats-info {
+    font-size: 12px;
+    color: #666;
+    margin: 4px 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
-    
-    .stats-info {
-        color: #98989d;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
+
+#ciaoclipboard-bubble.edge-bounce {
+    animation: edgeBounce 0.3s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
+@keyframes edgeBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.95); }
 } 

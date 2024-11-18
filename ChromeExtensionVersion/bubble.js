@@ -33,7 +33,7 @@ const lastUsedElement = document.getElementById('lastUsed');
 // Toggle panel
 bubbleButton.addEventListener('click', () => {
     panel.classList.toggle('show');
-    updateStats();
+    updateStats(false);
 });
 
 // Close panel when clicking outside
@@ -52,7 +52,8 @@ async function clearClipboard() {
     try {
         await navigator.clipboard.writeText('');
         successMessage.classList.add('show');
-        updateStats();
+        
+        updateStats(true);
         
         setTimeout(() => {
             successMessage.classList.remove('show');
@@ -65,68 +66,150 @@ async function clearClipboard() {
 }
 
 // Update statistics
-async function updateStats() {
-    const storage = chrome.storage.local;
-    try {
-        const data = await storage.get(['usageCount', 'lastUsed']);
-        const count = (data.usageCount || 0) + 1;
-        const now = new Date().toISOString();
-        
-        await storage.set({
-            usageCount: count,
-            lastUsed: now
-        });
+async function updateStats(shouldCount = false) {
+    if (chrome?.storage?.local) {
+        chrome.storage.local.get(['usageCount', 'lastUsed'], function(result) {
+            const count = shouldCount ? (result.usageCount || 0) + 1 : (result.usageCount || 0);
+            const now = new Date().toISOString();
+            
+            const lastUsed = shouldCount ? now : (result.lastUsed || 'Never');
+            
+            chrome.storage.local.set({
+                usageCount: count,
+                lastUsed: lastUsed
+            });
 
-        usageCountElement.textContent = count;
-        lastUsedElement.textContent = new Date(now).toLocaleString();
-    } catch (err) {
-        console.error('Storage error:', err);
+            usageCountElement.textContent = count;
+            lastUsedElement.textContent = new Date(lastUsed).toLocaleString();
+        });
+    } else {
+        console.error('Chrome storage API not available');
     }
 }
 
 // Add clear button listener
 clearButton.addEventListener('click', clearClipboard);
 
-// Make bubble draggable
+// 修改拖拽相关变量，使用更清晰的命名
 let isDragging = false;
-let currentX;
-let currentY;
-let initialX;
-let initialY;
-let xOffset = 0;
-let yOffset = 0;
+let startMouseX = 0;
+let startMouseY = 0;
+let startBubbleX = 0;
+let startBubbleY = 0;
 
-bubbleButton.addEventListener('mousedown', dragStart);
-document.addEventListener('mousemove', drag);
-document.addEventListener('mouseup', dragEnd);
+function startDragging(e) {
+    if (e.target !== bubbleButton) return;
+    e.preventDefault();
+    
+    isDragging = true;
+    bubble.classList.add('dragging');
 
-function dragStart(e) {
-    initialX = e.clientX - xOffset;
-    initialY = e.clientY - yOffset;
+    // 获取气泡当前位置
+    const rect = bubble.getBoundingClientRect();
+    startBubbleX = rect.left;
+    startBubbleY = rect.top;
 
-    if (e.target === bubbleButton) {
-        isDragging = true;
+    // 获取鼠标/触摸起始位置
+    if (e.type === 'touchstart') {
+        startMouseX = e.touches[0].clientX;
+        startMouseY = e.touches[0].clientY;
+    } else {
+        startMouseX = e.clientX;
+        startMouseY = e.clientY;
     }
 }
 
-function drag(e) {
-    if (isDragging) {
-        e.preventDefault();
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
-        xOffset = currentX;
-        yOffset = currentY;
+function doDrag(e) {
+    if (!isDragging) return;
+    e.preventDefault();
 
-        setTranslate(currentX, currentY, bubble);
+    // 获取当前鼠标/触摸位置
+    let currentMouseX, currentMouseY;
+    if (e.type === 'touchmove') {
+        currentMouseX = e.touches[0].clientX;
+        currentMouseY = e.touches[0].clientY;
+    } else {
+        currentMouseX = e.clientX;
+        currentMouseY = e.clientY;
     }
+
+    // 计算位移
+    const deltaX = currentMouseX - startMouseX;
+    const deltaY = currentMouseY - startMouseY;
+
+    // 计算新位置
+    let newX = startBubbleX + deltaX;
+    let newY = startBubbleY + deltaY;
+
+    // 获取视口和气泡尺寸
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const bubbleWidth = bubble.offsetWidth;
+    const bubbleHeight = bubble.offsetHeight;
+    const padding = 20;
+
+    // 应用边界限制
+    newX = Math.max(padding, Math.min(viewportWidth - bubbleWidth - padding, newX));
+    newY = Math.max(padding, Math.min(viewportHeight - bubbleHeight - padding, newY));
+
+    // 应用位置
+    bubble.style.transform = `translate(${newX - startBubbleX}px, ${newY - startBubbleY}px)`;
 }
 
-function setTranslate(xPos, yPos, el) {
-    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-}
-
-function dragEnd() {
-    initialX = currentX;
-    initialY = currentY;
+function stopDragging() {
+    if (!isDragging) return;
     isDragging = false;
-} 
+    bubble.classList.remove('dragging');
+
+    // 获取最终位置
+    const rect = bubble.getBoundingClientRect();
+    const finalX = rect.left;
+    const finalY = rect.top;
+
+    // 保存位置
+    if (chrome?.storage?.local) {
+        chrome.storage.local.set({
+            bubblePosition: { x: finalX, y: finalY }
+        });
+    }
+}
+
+// 初始化位置
+function initPosition() {
+    if (chrome?.storage?.local) {
+        chrome.storage.local.get(['bubblePosition'], function(result) {
+            if (result.bubblePosition && isValidPosition(result.bubblePosition.x, result.bubblePosition.y)) {
+                const { x, y } = result.bubblePosition;
+                bubble.style.transform = `translate(${x}px, ${y}px)`;
+            }
+            // 如果没有保存的位置或位置无效，使用默认的右下角位置（通过 CSS 实现）
+        });
+    }
+}
+
+// 验证位置是否有效
+function isValidPosition(x, y) {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const bubbleWidth = bubble.offsetWidth || 48;
+    const bubbleHeight = bubble.offsetHeight || 48;
+    const padding = 20;
+
+    return x >= padding && 
+           y >= padding && 
+           x <= (viewportWidth - bubbleWidth - padding) && 
+           y <= (viewportHeight - bubbleHeight - padding);
+}
+
+// 监听窗口大小变化
+window.addEventListener('resize', () => {
+    // 重新验证并调整位置
+    const rect = bubble.getBoundingClientRect();
+    if (!isValidPosition(rect.left, rect.top)) {
+        // 如果当前位置无效，重置到右下角
+        bubble.style.transform = 'translate(0, 0)';
+    }
+});
+
+// 初始化
+document.addEventListener('DOMContentLoaded', initPosition); 

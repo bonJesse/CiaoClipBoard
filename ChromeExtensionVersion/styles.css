@@ -1,0 +1,35 @@
+.chat-bubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(242, 242, 247, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.chat-bubble:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.chat-bubble:active {
+  transform: scale(0.95);
+}
+
+.chat-bubble img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.8;
+} 
