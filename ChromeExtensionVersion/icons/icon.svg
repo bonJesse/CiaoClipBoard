@@ -1,34 +1,58 @@
-<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-    <!-- Background -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
     <defs>
+        <!-- 渐变背景 -->
         <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#007AFF;stop-opacity:0.1"/>
-            <stop offset="100%" style="stop-color:#007AFF;stop-opacity:0.05"/>
+            <stop offset="0%" style="stop-color:rgba(255, 163, 102, 0.95)"/>
+            <stop offset="100%" style="stop-color:rgba(255, 138, 76, 0.95)"/>
         </linearGradient>
+        
+        <!-- 内部光晕 -->
+        <radialGradient id="innerGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:rgba(255,255,255,0.4)"/>
+            <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+        </radialGradient>
     </defs>
     
-    <!-- Base Circle -->
-    <circle cx="64" cy="64" r="60" fill="white"/>
-    <circle cx="64" cy="64" r="56" fill="url(#bgGradient)"/>
+    <!-- 主圆形背景 -->
+    <circle cx="64" cy="64" r="60" 
+            fill="url(#bgGradient)"
+            stroke="rgba(255,255,255,0.2)"
+            stroke-width="2"/>
+            
+    <!-- 内部光晕效果 -->
+    <circle cx="64" cy="64" r="56" 
+            fill="url(#innerGlow)"/>
     
-    <!-- Clipboard -->
-    <g transform="translate(32, 24)">
-        <!-- Clipboard Body -->
-        <rect x="0" y="8" width="64" height="72" rx="12" 
+    <!-- 文档和扫把图标 -->
+    <g transform="translate(64,64) scale(1.0) translate(-32,-32)">
+        <!-- 更大的文档背景 -->
+        <rect x="4" y="8" width="56" height="48" rx="8" 
               fill="white" 
-              stroke="#007AFF" 
-              stroke-width="4"/>
+              stroke="rgba(255,255,255,0.3)" 
+              stroke-width="2"/>
         
-        <!-- Clipboard Top -->
-        <rect x="20" y="0" width="24" height="16" rx="6" 
-              fill="#007AFF"/>
+        <!-- 文本行 -->
+        <g stroke="rgba(255,138,76,0.5)" stroke-width="2" stroke-linecap="round">
+            <line x1="12" y1="22" x2="52" y2="22"/>
+            <line x1="12" y1="32" x2="48" y2="32"/>
+            <line x1="12" y1="42" x2="44" y2="42"/>
+        </g>
         
-        <!-- Content Lines -->
-        <line x1="12" y1="28" x2="52" y2="28" 
-              stroke="#007AFF" stroke-width="4" stroke-linecap="round"/>
-        <line x1="12" y1="44" x2="44" y2="44" 
-              stroke="#007AFF" stroke-width="4" stroke-linecap="round"/>
-        <line x1="12" y1="60" x2="48" y2="60" 
-              stroke="#007AFF" stroke-width="4" stroke-linecap="round"/>
+        <!-- 更大的黑色扫把，带白色空白 -->
+        <g transform="translate(48,44) rotate(-30)">
+            <!-- 扫把柄 -->
+            <line x1="0" y1="0" x2="0" y2="-18" 
+                  stroke="rgba(0,0,0,0.8)" 
+                  stroke-width="4" 
+                  stroke-linecap="round"/>
+            
+            <!-- 扫把头 - 黑色外框 -->
+            <path d="M-7,-16 Q0,-19 7,-16 L5,-13 Q0,-16 -5,-13 Z" 
+                  fill="rgba(0,0,0,0.8)"/>
+            
+            <!-- 扫把头 - 白色中间部分 -->
+            <path d="M-5,-15.5 Q0,-17.5 5,-15.5 L3,-14 Q0,-16 -3,-14 Z" 
+                  fill="white"/>
+        </g>
     </g>
 </svg> 
