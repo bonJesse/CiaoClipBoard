@@ -1,206 +1,191 @@
 #ciaoclipboard-bubble {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index: 10000;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     user-select: none;
-    touch-action: none;
-    transition: transform 0.05s ease-out;
+    transform: translate(0, 0);
     will-change: transform;
-}
-
-#ciaoclipboard-bubble.dragging {
-    transition: none !important;
-    cursor: grabbing;
-}
-
-#ciaoclipboard-bubble.dragging .bubble-button {
-    transform: scale(0.95);
-    box-shadow: 
-        0 8px 25px rgba(79, 184, 201, 0.4),
-        inset 0 -2px 5px rgba(0,0,0,0.2),
-        inset 0 2px 5px rgba(255,255,255,0.4);
 }
 
 .bubble-button {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 163, 102, 0.95), rgba(255, 138, 76, 0.95));
     border: none;
-    cursor: grab;
-    background: linear-gradient(135deg, #4FB8C9, #8CD790);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
     box-shadow: 
-        0 4px 15px rgba(79, 184, 201, 0.3),
-        inset 0 -2px 5px rgba(0,0,0,0.2),
-        inset 0 2px 5px rgba(255,255,255,0.4);
-    transform: perspective(500px) rotateX(10deg);
-    will-change: transform;
-}
-
-.bubble-button::before,
-.bubble-button::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.4) 50%,
-        transparent 70%
-    );
-    transform: translateX(-100%);
-    animation: lightEffect 3s infinite;
-}
-
-.bubble-button::after {
-    animation-delay: 1.5s;
-}
-
-@keyframes lightEffect {
-    0% {
-        transform: translateX(-100%) skewX(-15deg);
-    }
-    100% {
-        transform: translateX(200%) skewX(-15deg);
-    }
+        0 4px 12px rgba(255, 138, 76, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .bubble-button:hover {
-    transform: perspective(500px) rotateX(10deg) scale(1.05);
-    background: linear-gradient(135deg, #5BC3D5, #98E39B);
+    transform: scale(1.05);
     box-shadow: 
-        0 6px 20px rgba(79, 184, 201, 0.4),
-        inset 0 -2px 5px rgba(0,0,0,0.2),
-        inset 0 2px 5px rgba(255,255,255,0.4);
+        0 6px 16px rgba(255, 138, 76, 0.25),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, rgba(255, 163, 102, 0.98), rgba(255, 138, 76, 0.98));
 }
 
-.bubble-button:active {
-    transform: perspective(500px) rotateX(10deg) scale(0.95);
-    transition: all 0.1s;
+.bubble-button svg {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .bubble-panel {
     position: absolute;
     bottom: 60px;
     right: 0;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 12px;
-    padding: 15px;
-    box-shadow: 
-        0 10px 30px rgba(0,0,0,0.1),
-        0 1px 8px rgba(0,0,0,0.05);
-    backdrop-filter: blur(10px);
+    padding: 16px;
+    width: 200px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     display: none;
-    min-width: 200px;
-    transform-origin: bottom right;
-    transform: perspective(500px) rotateX(5deg) scale(0.95);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .bubble-panel.show {
     display: block;
-    opacity: 1;
-    transform: perspective(500px) rotateX(0) scale(1);
 }
 
 .clear-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+    width: 90%;
+    padding: 8px;
+    background: linear-gradient(135deg, rgba(255, 163, 102, 0.95), rgba(255, 138, 76, 0.95));
     color: white;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    margin-bottom: 10px;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 
-        0 2px 8px rgba(255,107,107,0.3),
-        inset 0 -2px 5px rgba(0,0,0,0.1);
+    margin: 8px auto;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
-.clear-button::before {
+.clear-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 138, 76, 0.25);
+    background: linear-gradient(135deg, rgba(255, 163, 102, 0.98), rgba(255, 138, 76, 0.98));
+}
+
+.clear-button::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.2) 50%,
-        transparent 70%
-    );
-    transform: translateX(-100%);
-    animation: buttonLight 2s infinite;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: rgba(255, 255, 255, 0.2);
+    transition: width 1s ease;
 }
 
-@keyframes buttonLight {
-    0% {
-        transform: translateX(-100%) skewX(-15deg);
-    }
-    100% {
-        transform: translateX(200%) skewX(-15deg);
-    }
+.clear-button.clearing::after {
+    width: 100%;
 }
 
-.clear-button:hover {
-    transform: translateY(-2px) scale(1.02);
-    background: linear-gradient(135deg, #FF7B7B, #FF9E9E);
-    box-shadow: 
-        0 4px 12px rgba(255,107,107,0.4),
-        inset 0 -2px 5px rgba(0,0,0,0.1);
-}
-
-.clear-button:active {
-    transform: translateY(1px) scale(0.98);
-}
-
-.success-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    background: rgba(75, 185, 175, 0.95);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 12px rgba(75, 185, 175, 0.3);
-}
-
-.success-message.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+.clear-button.cleared::after {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: background-color 0.3s ease;
 }
 
 .stats-info {
     font-size: 12px;
     color: #666;
-    margin: 4px 0;
+    margin: 6px 0;
+    text-align: left;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.success-message {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    display: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
 }
 
-#ciaoclipboard-bubble.edge-bounce {
-    animation: edgeBounce 0.3s cubic-bezier(0.36, 0, 0.66, -0.56);
+.success-message.show {
+    display: block;
+    animation: fadeInOut 1s ease;
 }
 
-@keyframes edgeBounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.95); }
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}
+
+#ciaoclipboard-bubble.dragging {
+    cursor: grabbing;
+    user-select: none;
+    transition: none;
+}
+
+#ciaoclipboard-bubble.dragging .bubble-button {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.close-button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(128, 128, 128, 0.4);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s ease;
+    transform: none;
+    pointer-events: auto;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.close-button:hover {
+    background: rgba(128, 128, 128, 0.6);
+    transform: scale(1.1);
+}
+
+#ciaoclipboard-bubble:hover .close-button {
+    opacity: 1;
 } 
