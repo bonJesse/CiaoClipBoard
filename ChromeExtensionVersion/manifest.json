@@ -21,7 +21,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
       "css": ["bubble.css"],
       "js": ["bubble.js"]
     }
