@@ -14,6 +14,9 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    width: 300px;
+    padding: 16px;
+    max-height: 480px;
 }
 
 .header-wrapper {
@@ -31,28 +34,28 @@ body {
 }
 
 .logo {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     display: block;
 }
 
 h1 {
-    margin: 0;
-    font-size: 24px;
+    margin: 8px 0 4px;
+    font-size: 20px;
     font-weight: 600;
     color: #1C1C1E;
 }
 
 .subtitle {
-    margin: 4px 0 0;
-    font-size: 14px;
+    margin: 0 0 12px;
+    font-size: 12px;
     color: #8E8E93;
 }
 
 h2 {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
-    margin: 20px 0 12px;
+    margin: 0 0 8px;
     color: #FF8A4C;
 }
 
@@ -63,7 +66,10 @@ ul {
 }
 
 li {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 4px 0;
+    border: none;
+    list-style: none;
     line-height: 1.4;
     padding: 8px 0;
     border-bottom: 1px solid rgba(60, 60, 67, 0.1);
@@ -75,21 +81,20 @@ li:last-child {
 }
 
 .usage-section p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #3C3C43;
-    margin: 8px 0;
+    font-size: 12px;
+    color: #666;
+    margin: 0;
 }
 
 footer {
     text-align: center;
-    margin-top: 24px;
-    padding-top: 16px;
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid rgba(60, 60, 67, 0.1);
 }
 
 footer p {
-    font-size: 12px;
+    font-size: 11px;
     color: #8E8E93;
     margin: 0;
 }
@@ -125,6 +130,7 @@ footer p {
 }
 
 .pro-badge {
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -139,15 +145,13 @@ footer p {
     transition: all 0.3s ease;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
 }
 
 .pro-badge:hover {
     transform: translateY(-1px);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     background: linear-gradient(135deg, #FFE55C, #FFB347);
+    color: white;
 }
 
 .pro-tooltip {
@@ -174,4 +178,37 @@ footer p {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+}
+
+.info-section {
+    display: flex;
+    gap: 16px;
+    margin: 12px 0;
+}
+
+.features-column,
+.privacy-column {
+    flex: 1;
+}
+
+.usage-section {
+    margin: 12px 0;
+    text-align: center;
+}
+
+.usage-section p {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(60, 60, 67, 0.1);
+}
+
+footer p {
+    font-size: 11px;
+    margin: 0;
 } 
