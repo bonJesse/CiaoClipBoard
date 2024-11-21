@@ -8,40 +8,49 @@
 </head>
 <body>
     <div class="container">
-        <!-- Logo Section -->
-        <div class="logo-section" id="logoSection">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="logo">
-                <defs>
-                    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:rgba(255, 163, 102, 0.95)"/>
-                        <stop offset="100%" style="stop-color:rgba(255, 138, 76, 0.95)"/>
-                    </linearGradient>
-                    <radialGradient id="innerGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" style="stop-color:rgba(255,255,255,0.4)"/>
-                        <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
-                    </radialGradient>
-                </defs>
-                <!-- 使用与 icon.svg 相同的图标内容 -->
-                <circle cx="64" cy="64" r="60" fill="url(#bgGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-                <circle cx="64" cy="64" r="56" fill="url(#innerGlow)"/>
-                <g transform="translate(64,64) scale(1.0) translate(-32,-32)">
-                    <rect x="4" y="8" width="56" height="48" rx="8" fill="white" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-                    <g stroke="rgba(255,138,76,0.5)" stroke-width="2" stroke-linecap="round">
-                        <line x1="12" y1="22" x2="52" y2="22"/>
-                        <line x1="12" y1="32" x2="48" y2="32"/>
-                        <line x1="12" y1="42" x2="44" y2="42"/>
+        <div class="header-wrapper">
+            <!-- Logo Section -->
+            <div class="logo-section" id="logoSection">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="logo">
+                    <defs>
+                        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(255, 163, 102, 0.95)"/>
+                            <stop offset="100%" style="stop-color:rgba(255, 138, 76, 0.95)"/>
+                        </linearGradient>
+                        <radialGradient id="innerGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style="stop-color:rgba(255,255,255,0.4)"/>
+                            <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- 使用与 icon.svg 相同的图标内容 -->
+                    <circle cx="64" cy="64" r="60" fill="url(#bgGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+                    <circle cx="64" cy="64" r="56" fill="url(#innerGlow)"/>
+                    <g transform="translate(64,64) scale(1.0) translate(-32,-32)">
+                        <rect x="4" y="8" width="56" height="48" rx="8" fill="white" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                        <g stroke="rgba(255,138,76,0.5)" stroke-width="2" stroke-linecap="round">
+                            <line x1="12" y1="22" x2="52" y2="22"/>
+                            <line x1="12" y1="32" x2="48" y2="32"/>
+                            <line x1="12" y1="42" x2="44" y2="42"/>
+                        </g>
+                        <g transform="translate(48,44) rotate(-30)">
+                            <line x1="0" y1="0" x2="0" y2="-18" stroke="rgba(0,0,0,0.8)" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M-7,-16 Q0,-19 7,-16 L5,-13 Q0,-16 -5,-13 Z" fill="rgba(0,0,0,0.8)"/>
+                            <path d="M-5,-15.5 Q0,-17.5 5,-15.5 L3,-14 Q0,-16 -3,-14 Z" fill="white"/>
+                        </g>
                     </g>
-                    <g transform="translate(48,44) rotate(-30)">
-                        <line x1="0" y1="0" x2="0" y2="-18" stroke="rgba(0,0,0,0.8)" stroke-width="4" stroke-linecap="round"/>
-                        <path d="M-7,-16 Q0,-19 7,-16 L5,-13 Q0,-16 -5,-13 Z" fill="rgba(0,0,0,0.8)"/>
-                        <path d="M-5,-15.5 Q0,-17.5 5,-15.5 L3,-14 Q0,-16 -3,-14 Z" fill="white"/>
-                    </g>
-                </g>
-            </svg>
-            <h1>CiaoClipBoard</h1>
-            <p class="subtitle">Nothing left after 1 click</p>
-            <div class="tooltip">Click to show bubble</div>
+                </svg>
+                <div class="tooltip">Click to show bubble</div>
+            </div>
+            
+            <!-- 独立的 PRO 标识 -->
+            <div class="pro-section">
+                <span class="pro-badge" id="proBadge">PRO</span>
+                <div class="pro-tooltip">Coming Soon!</div>
+            </div>
         </div>
+
+        <h1>CiaoClipBoard</h1>
+        <p class="subtitle">Nothing left after 1 click</p>
 
         <!-- Features Section -->
         <div class="features-section">

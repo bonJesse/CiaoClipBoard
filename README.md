@@ -16,6 +16,7 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 - Draggable floating bubble (Chrome Extension)
 - Restorable bubble interface
 - Interactive popup page
+- PRO features coming soon
 
 ## Variants
 
@@ -28,6 +29,7 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 - Usage statistics
 - Restorable bubble from popup
 - Interactive status feedback
+- PRO version preview
 - Installation steps:
   1. Open Chrome Extensions (chrome://extensions/)
   2. Enable Developer Mode
@@ -46,10 +48,11 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 CiaoClipBoard/
 ├── CiaoClipBoard.html          # Standalone web application
 ├── README.md                   # Documentation
+├── PRIVACY.md                  # Privacy policy
 └── ChromeExtensionVersion/     # Chrome extension variant
     ├── manifest.json           # Extension configuration
     ├── bubble.js              # Core functionality
-    ├── bubble.css             # Styles
+    ├── bubble.css             # Bubble styles
     ├── background.js          # Background service
     ├── popup.html             # Extension popup page
     ├── popup.css              # Popup styles
@@ -78,6 +81,7 @@ CiaoClipBoard/
 - Bubble restoration
 - Status synchronization
 - Privacy-focused design
+- PRO features preview
 
 ### Security & Privacy
 - No data collection
@@ -88,6 +92,7 @@ CiaoClipBoard/
 - Content Security Policy
 - Secure messaging system
 - Error handling
+- Isolated storage
 
 ## Browser Compatibility
 - Chrome Extension: Chrome 88+
@@ -106,14 +111,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 This project is open source and available under the MIT License.
 
 ## Privacy Policy
-- No data collection
-- No external transmission
-- Local storage only
-- No cookies
-- No tracking
-- Complete privacy protection
-- Secure messaging
-- Isolated storage
+See [PRIVACY.md](PRIVACY.md) for detailed privacy policy.
 
 ---
 
@@ -133,6 +131,7 @@ CiaoClipBoard 是一个注重隐私的剪贴板清理工具，提供 Chrome 扩�
 - 可拖动悬浮球（Chrome 扩展版）
 - 可恢复的悬浮界面
 - 交互式弹出页面
+- PRO 功能即将推出
 
 ## 版本说明
 
@@ -145,6 +144,7 @@ CiaoClipBoard 是一个注重隐私的剪贴板清理工具，提供 Chrome 扩�
 - 使用统计
 - 可从弹出窗口恢复悬浮球
 - 交互式状态反馈
+- PRO 版本预览
 - 安装步骤：
   1. 打开 Chrome 扩展页面 (chrome://extensions/)
   2. 开启开发者模式
@@ -163,6 +163,7 @@ CiaoClipBoard 是一个注重隐私的剪贴板清理工具，提供 Chrome 扩�
 CiaoClipBoard/
 ├── CiaoClipBoard.html          # 网页版应用
 ├── README.md                   # 说明文档
+├── PRIVACY.md                  # 隐私政策
 └── ChromeExtensionVersion/     # Chrome 扩展版
     ├── manifest.json           # 扩展配置
     ├── bubble.js              # 核心功能
@@ -195,6 +196,7 @@ CiaoClipBoard/
 - 悬浮球恢复
 - 状态同步
 - 注重隐私设计
+- PRO 功能预览
 
 ### 安全与隐私
 - 无数据收集
@@ -205,6 +207,7 @@ CiaoClipBoard/
 - 内容安全策略
 - 安全消息系统
 - 错误处理
+- 隔离存储
 
 ## 浏览器兼容性
 - Chrome 扩展：Chrome 88+
@@ -223,11 +226,4 @@ CiaoClipBoard/
 本项目采用 MIT 许可证开源。
 
 ## 隐私政策
-- 无数据收集
-- 无外部传输
-- 仅本地存储
-- 无 Cookie
-- 无跟踪
-- 完全隐私保护
-- 安全消息传递
-- 隔离存储
+请查看 [PRIVACY.md](PRIVACY.md) 获取详细隐私政策。
