@@ -351,7 +351,7 @@ footer p {
 /* Pro 激活状态 */
 .pro-badge.active {
     background: linear-gradient(135deg, #FFD700, #FFA500);
-    pointer-events: none;
+    animation: glow 2s infinite;
 }
 
 /* Pro 激活时隐藏兑换区域 */

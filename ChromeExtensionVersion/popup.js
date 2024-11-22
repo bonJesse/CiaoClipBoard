@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 更新 Pro 状态
     if (isPro) {
         proBadge.classList.add('active');
+        proBadge.style.pointerEvents = 'auto';  // 确保链接可点击
         // Pro 激活时隐藏 Redeem 相关元素
         const redeemSection = document.querySelector('.redeem-section');
         if (redeemSection) {
@@ -290,6 +291,7 @@ async function handleUnlock() {
             // 验证成功
             await chrome.storage.local.set({ isPro: true });
             proBadge.classList.add('active');
+            proBadge.style.pointerEvents = 'auto';  // 确保链接可点击
             unlockInput.value = '';
             
             // 隐藏整个 redeem 区域
