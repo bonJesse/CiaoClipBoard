@@ -380,4 +380,113 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     if (namespace === 'local' && changes.isPro) {
         checkProStatus();
     }
+});
+
+// 添加语言包
+const bubbleI18n = {
+    en: {
+        clickClear: '1-Click Clear',
+        timesUsed: 'Times Used:',
+        lastUsed: 'Last Used:',
+        never: 'Never',
+        cleared: 'Cleared!'
+    },
+    zh: {
+        clickClear: '一键清理',
+        timesUsed: '使用次数：',
+        lastUsed: '上次使用：',
+        never: '从未使用',
+        cleared: '已清理！'
+    }
+};
+
+// 获取当前语言
+async function getCurrentLanguage() {
+    try {
+        const { language } = await chrome.storage.local.get(['language']);
+        return language || 'en';
+    } catch (error) {
+        console.error('Error getting language:', error);
+        return 'en';
+    }
+}
+
+// 更新气泡球文本和统计信息
+async function updateBubbleTexts() {
+    try {
+        const currentLang = await getCurrentLanguage();
+        const texts = bubbleI18n[currentLang];
+        const { usageCount, lastUsed } = await chrome.storage.local.get(['usageCount', 'lastUsed']);
+
+        // 更新清理按钮文本
+        const clearButton = document.querySelector('.clear-button');
+        if (clearButton) {
+            clearButton.textContent = texts.clickClear;
+        }
+
+        // 更新统计信息文本
+        const statsInfos = document.querySelectorAll('.stats-info');
+        if (statsInfos.length >= 2) {
+            // 使用次数
+            const usageCountSpan = document.getElementById('usageCount');
+            statsInfos[0].textContent = texts.timesUsed + ' ';
+            statsInfos[0].appendChild(usageCountSpan);
+            usageCountSpan.textContent = usageCount || '0';
+
+            // 最后使用时间
+            const lastUsedSpan = document.getElementById('lastUsed');
+            statsInfos[1].textContent = texts.lastUsed + ' ';
+            statsInfos[1].appendChild(lastUsedSpan);
+            
+            // 格式化最后使用时间
+            if (!lastUsed || lastUsed === 'Never') {
+                lastUsedSpan.textContent = texts.never;
+            } else {
+                const date = new Date(lastUsed);
+                lastUsedSpan.textContent = currentLang === 'zh' 
+                    ? date.toLocaleString('zh-CN', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    })
+                    : date.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+            }
+        }
+
+        // 更新成功消息
+        const successMessage = document.querySelector('.success-message');
+        if (successMessage) {
+            successMessage.textContent = texts.cleared;
+        }
+    } catch (error) {
+        console.error('Error updating bubble texts:', error);
+    }
+}
+
+// 监听存储变化
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (namespace === 'local') {
+        if (changes.language) {
+            updateBubbleTexts();
+        }
+        if (changes.usageCount || changes.lastUsed) {
+            updateBubbleTexts();
+        }
+    }
+});
+
+// 在初始化和语言切换时更新文本
+document.addEventListener('DOMContentLoaded', () => {
+    updateBubbleTexts();
 }); 

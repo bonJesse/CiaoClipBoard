@@ -1,3 +1,173 @@
+// 语言包
+const i18n = {
+    en: {
+        title: 'CiaoClipBoard',
+        subtitle: 'Nothing left after 1 click',
+        features: 'Features',
+        privacy: 'Privacy',
+        oneClickCleaning: '✨ One-click cleaning',
+        instantFeedback: '🎯 Instant feedback',
+        draggableBubble: '🔄 Draggable bubble',
+        usageTracking: '📊 Usage tracking',
+        noDataCollection: '🔒 No data collection',
+        localStorage: '💾 Local storage only',
+        completePrivacy: '🛡️ Complete privacy',
+        noTracking: '🚫 No tracking',
+        usageHint: '💡 Click bubble to clear, drag to reposition',
+        redeemCode: '🎁 Redeem Code',
+        footer: '© 2024 CiaoClipBoard - Privacy First',
+        bubbleVisible: 'Bubble is visible',
+        clickToShow: 'Click to show bubble',
+        proActivated: '✨ PRO Activated!',
+        invalidCode: '❌ Invalid Code',
+        proTooltip: 'Support us!',
+        clickClear: '1-Click Clear',
+        timesUsed: 'Times Used:',
+        lastUsed: 'Last Used:',
+        never: 'Never',
+        cleared: 'Cleared!',
+        supportUs: 'Support us!'
+    },
+    zh: {
+        title: 'CiaoClipBoard',
+        subtitle: '一键清空剪贴板',
+        features: '功能特点',
+        privacy: '隐私保护',
+        oneClickCleaning: '✨ 一键清理',
+        instantFeedback: '🎯 即时反馈',
+        draggableBubble: '🔄 可拖动气泡',
+        usageTracking: '📊 使用统计',
+        noDataCollection: '🔒 无数据收集',
+        localStorage: '💾 仅本地存储',
+        completePrivacy: '🛡️ 完全隐私',
+        noTracking: '🚫 无跟踪记录',
+        usageHint: '💡 点击气泡清理，拖动改变位置',
+        redeemCode: '🎁 兑换码',
+        footer: '© 2024 CiaoClipBoard - 隐私优先',
+        bubbleVisible: '气泡已显示',
+        clickToShow: '点击显示气泡',
+        proActivated: '✨ PRO 已激活！',
+        invalidCode: '❌ 兑换码无效',
+        proTooltip: '支持我们！',
+        clickClear: '一键清理',
+        timesUsed: '使用次数：',
+        lastUsed: '上次使用：',
+        never: '从未使用',
+        cleared: '已清理！',
+        supportUs: '支持我们！'
+    }
+};
+
+// 当前语言
+let currentLang = 'en';
+
+// 更新时间格式化函数
+function formatLastUsed(timestamp, lang) {
+    if (!timestamp || timestamp === 'Never') {
+        return i18n[lang].never;
+    }
+    
+    try {
+        const date = new Date(timestamp);
+        if (lang === 'zh') {
+            return date.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+        } else {
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+    } catch (error) {
+        console.error('Error formatting date:', error);
+        return timestamp;
+    }
+}
+
+// 修改更新文本的函数
+function updateTexts() {
+    const texts = i18n[currentLang];
+    
+    // 更新普通文本
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key]) {
+            el.textContent = texts[key];
+        }
+    });
+
+    // 更新 Pro 提示文本
+    const proTooltip = document.querySelector('.pro-tooltip');
+    if (proTooltip) {
+        proTooltip.textContent = texts.supportUs;
+    }
+
+    // 更新最后使用时间
+    chrome.storage.local.get(['lastUsed'], function(result) {
+        const lastUsedElement = document.querySelector('[data-i18n="lastUsed"]');
+        if (lastUsedElement) {
+            const formattedDate = formatLastUsed(result.lastUsed, currentLang);
+            lastUsedElement.textContent = formattedDate;
+        }
+    });
+}
+
+// 在语言切换时更新所有文本
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        currentLang = lang;
+        
+        // 更新按钮状态
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+        });
+        
+        // 保存语言选择
+        chrome.storage.local.set({ language: lang });
+        
+        // 更新所有文本
+        updateTexts();
+    });
+});
+
+// 初始化语言设置
+document.addEventListener('DOMContentLoaded', async () => {
+    const { language, isPro } = await chrome.storage.local.get(['language', 'isPro']);
+    
+    // 设置语言
+    if (language) {
+        currentLang = language;
+        document.querySelector(`[data-lang="${language}"]`).classList.add('active');
+    } else {
+        document.querySelector('[data-lang="en"]').classList.add('active');
+    }
+    
+    // 更新所有文本
+    updateTexts();
+    
+    // 更新 Pro 状态
+    if (isPro) {
+        proBadge.classList.add('active');
+        // Pro 激活时隐藏 Redeem 相关元素
+        const redeemSection = document.querySelector('.redeem-section');
+        if (redeemSection) {
+            redeemSection.style.display = 'none';
+        }
+    }
+});
+
 // 添加 logo 点击事件处理
 document.getElementById('logoSection').addEventListener('click', async () => {
     try {
@@ -166,23 +336,6 @@ unlockButton.addEventListener('click', handleUnlock);
 unlockInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         handleUnlock();
-    }
-});
-
-// 初始化时检查 Pro 状态
-document.addEventListener('DOMContentLoaded', async () => {
-    const { isPro } = await chrome.storage.local.get(['isPro']);
-    if (isPro) {
-        proBadge.classList.add('active');
-        // Pro 激活时隐藏 Redeem 相关元素
-        const redeemSection = document.querySelector('.redeem-section');
-        const redeemWrapper = document.querySelector('.redeem-wrapper');
-        if (redeemSection) {
-            redeemSection.style.display = 'none';
-        }
-        if (redeemWrapper) {
-            redeemWrapper.style.display = 'none';
-        }
     }
 });
 

@@ -9,6 +9,13 @@
 <body>
     <div class="container">
         <div class="header-wrapper">
+            <!-- 添加语言切换按钮 -->
+            <div class="lang-switch">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <span>/</span>
+                <button class="lang-btn" data-lang="zh">中</button>
+            </div>
+
             <!-- Logo Section -->
             <div class="logo-section" id="logoSection">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="logo">
@@ -45,37 +52,38 @@
             <!-- Pro Section -->
             <div class="pro-section">
                 <a href="https://buymeacoffee.com/jesuisjesse" target="_blank" class="pro-badge" id="proBadge">PRO</a>
+                <div class="pro-tooltip" data-i18n="supportUs">Support us!</div>
             </div>
         </div>
 
-        <h1>CiaoClipBoard</h1>
-        <p class="subtitle">Nothing left after 1 click</p>
+        <h1 data-i18n="title">CiaoClipBoard</h1>
+        <p class="subtitle" data-i18n="subtitle">Nothing left after 1 click</p>
 
         <!-- 两列布局的 Features 和 Privacy -->
         <div class="info-section">
             <div class="features-column">
-                <h2>Features</h2>
+                <h2 data-i18n="features">Features</h2>
                 <ul>
-                    <li>✨ One-click cleaning</li>
-                    <li>🎯 Instant feedback</li>
-                    <li>🔄 Draggable bubble</li>
-                    <li>📊 Usage tracking</li>
+                    <li data-i18n="oneClickCleaning">✨ One-click cleaning</li>
+                    <li data-i18n="instantFeedback">🎯 Instant feedback</li>
+                    <li data-i18n="draggableBubble">🔄 Draggable bubble</li>
+                    <li data-i18n="usageTracking">📊 Usage tracking</li>
                 </ul>
             </div>
             <div class="privacy-column">
-                <h2>Privacy</h2>
+                <h2 data-i18n="privacy">Privacy</h2>
                 <ul>
-                    <li>🔒 No data collection</li>
-                    <li>💾 Local storage only</li>
-                    <li>🛡️ Complete privacy</li>
-                    <li>🚫 No tracking</li>
+                    <li data-i18n="noDataCollection">🔒 No data collection</li>
+                    <li data-i18n="localStorage">💾 Local storage only</li>
+                    <li data-i18n="completePrivacy">🛡️ Complete privacy</li>
+                    <li data-i18n="noTracking">🚫 No tracking</li>
                 </ul>
             </div>
         </div>
 
         <!-- 使用说明 -->
         <div class="usage-section">
-            <p>💡 Click bubble to clear, drag to reposition</p>
+            <p data-i18n="usageHint">💡 Click bubble to clear, drag to reposition</p>
         </div>
 
         <!-- 兑换码区域 -->
@@ -83,7 +91,7 @@
             <div class="redeem-wrapper">
                 <button class="redeem-button">
                     <span class="redeem-icon">🎁</span>
-                    <span>Redeem Code</span>
+                    <span data-i18n="redeemCode">Redeem Code</span>
                 </button>
                 <div class="redeem-input-wrapper">
                     <input type="text" 
@@ -100,7 +108,7 @@
         </div>
 
         <footer>
-            <p>© 2024 CiaoClipBoard - Privacy First</p>
+            <p data-i18n="footer">© 2024 CiaoClipBoard - Privacy First</p>
         </footer>
     </div>
     <script src="popup.js"></script>
