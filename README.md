@@ -13,11 +13,12 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 - Privacy-focused design
 - No data collection
 - Modern UI with animations
-- Draggable floating bubble (Chrome Extension)
+- Draggable floating bubble
 - Restorable bubble interface
 - Interactive popup page
 - PRO features with custom themes
 - Redeem code system
+- Multi-language support (EN/CN)
 
 ### PRO Features
 - Custom themes (including Cat theme)
@@ -25,6 +26,14 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 - Exclusive visual effects
 - More themes coming soon
 - Support developer via Buy Me a Coffee
+- Redeem code activation
+
+### Language Support
+- English (EN)
+- Chinese (CN)
+- Real-time language switching
+- Localized date formats
+- Consistent UI translations
 
 ## Variants
 
@@ -93,6 +102,9 @@ CiaoClipBoard/
 - PRO features system
 - Secure code redemption
 - Theme switching capability
+- Multi-language support
+- Localized date formats
+- Real-time language switching
 
 ### Security & Privacy
 - No data collection
@@ -139,11 +151,12 @@ CiaoClipBoard 是一个注重隐私的剪贴板清理工具，提供 Chrome 扩�
 - 注重隐私设计
 - 无数据收集
 - 现代化界面动画
-- 可拖动悬浮球（Chrome 扩展版）
+- 可拖动悬浮球
 - 可恢复的悬浮界面
 - 交互式弹出页面
 - PRO 功能与自定义主题
 - 兑换码系统
+- 多语言支持（中/英）
 
 ### PRO 功能
 - 自定义主题（包含猫咪主题）
@@ -151,6 +164,14 @@ CiaoClipBoard 是一个注重隐私的剪贴板清理工具，提供 Chrome 扩�
 - 专属视觉效果
 - 更多主题即将推出
 - 通过 Buy Me a Coffee 支持开发者
+- 兑换码激活
+
+### 语言支持
+- 英语 (EN)
+- 中文 (CN)
+- 实时语言切换
+- 本地化日期格式
+- 统一界面翻译
 
 ## 版本说明
 
@@ -216,6 +237,9 @@ CiaoClipBoard/
 - 状态同步
 - 注重隐私设计
 - PRO 功能预览
+- 多语言支持
+- 本地化日期格式
+- 实时语言切换
 
 ### 安全与隐私
 - 无数据收集
