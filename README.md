@@ -16,7 +16,15 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 - Draggable floating bubble (Chrome Extension)
 - Restorable bubble interface
 - Interactive popup page
-- PRO features coming soon
+- PRO features with custom themes
+- Redeem code system
+
+### PRO Features
+- Custom themes (including Cat theme)
+- Premium status indicator
+- Exclusive visual effects
+- More themes coming soon
+- Support developer via Buy Me a Coffee
 
 ## Variants
 
@@ -29,7 +37,8 @@ CiaoClipBoard is a privacy-focused clipboard cleaning tool available as both a C
 - Usage statistics
 - Restorable bubble from popup
 - Interactive status feedback
-- PRO version preview
+- PRO version with themes
+- Redeem code system
 - Installation steps:
   1. Open Chrome Extensions (chrome://extensions/)
   2. Enable Developer Mode
@@ -81,7 +90,9 @@ CiaoClipBoard/
 - Bubble restoration
 - Status synchronization
 - Privacy-focused design
-- PRO features preview
+- PRO features system
+- Secure code redemption
+- Theme switching capability
 
 ### Security & Privacy
 - No data collection
@@ -131,7 +142,15 @@ CiaoClipBoard 是一个注重隐私的剪贴板清理工具，提供 Chrome 扩�
 - 可拖动悬浮球（Chrome 扩展版）
 - 可恢复的悬浮界面
 - 交互式弹出页面
-- PRO 功能即将推出
+- PRO 功能与自定义主题
+- 兑换码系统
+
+### PRO 功能
+- 自定义主题（包含猫咪主题）
+- 高级状态标识
+- 专属视觉效果
+- 更多主题即将推出
+- 通过 Buy Me a Coffee 支持开发者
 
 ## 版本说明
 
