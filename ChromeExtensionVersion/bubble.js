@@ -5,9 +5,9 @@ const bubbleHTML = `
         <button class="bubble-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
                 <defs>
-                    <linearGradient id="sweep" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:rgba(0,122,255,0.2)"/>
-                        <stop offset="100%" style="stop-color:rgba(0,122,255,0)"/>
+                    <linearGradient id="sweep-orange" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:rgba(255,138,76,0.2)"/>
+                        <stop offset="100%" style="stop-color:rgba(255,138,76,0)"/>
                         <animate attributeName="x1" values="0%;100%" dur="1.5s" repeatCount="indefinite"/>
                         <animate attributeName="x2" values="100%;200%" dur="1.5s" repeatCount="indefinite"/>
                     </linearGradient>
@@ -16,7 +16,7 @@ const bubbleHTML = `
                 <!-- 文本背景 -->
                 <rect x="8" y="16" width="48" height="32" rx="4" 
                       fill="white" 
-                      stroke="rgba(0,122,255,0.3)" 
+                      stroke="rgba(255,138,76,0.3)" 
                       stroke-width="2"/>
 
                 <!-- 文本行 -->
@@ -38,7 +38,7 @@ const bubbleHTML = `
 
                 <!-- 清扫效果 -->
                 <rect x="8" y="16" width="48" height="32" 
-                      fill="url(#sweep)" 
+                      fill="url(#sweep-orange)" 
                       rx="4">
                     <animate attributeName="opacity"
                         values="0;0.5;0"
@@ -61,8 +61,10 @@ const bubbleHTML = `
                 </g>
             </svg>
         </button>
+        <div class="pro-badge">PRO</div>
         <div class="bubble-panel">
             <button class="clear-button">1-Click Clear</button>
+            <div class="pro-badge">PRO</div>
             <div class="stats-info">Times Used: <span id="usageCount">0</span></div>
             <div class="stats-info">Last Used: <span id="lastUsed">Never</span></div>
             <div class="success-message">Cleared!</div>
@@ -350,5 +352,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             bubble.style.display = 'block';
             chrome.storage.local.set({ bubbleVisible: true });
         }
+    }
+});
+
+// 添加检查 Pro 状态的函数
+async function checkProStatus() {
+    try {
+        const { isPro } = await chrome.storage.local.get(['isPro']);
+        const bubble = document.getElementById('ciaoclipboard-bubble');
+        const proBadge = bubble.querySelector('.pro-badge');
+        
+        if (isPro) {
+            proBadge.classList.add('show');
+        } else {
+            proBadge.classList.remove('show');
+        }
+    } catch (error) {
+        console.error('Error checking Pro status:', error);
+    }
+}
+
+// 在初始化时检查 Pro 状态
+document.addEventListener('DOMContentLoaded', checkProStatus);
+
+// 监听存储变化
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (namespace === 'local' && changes.isPro) {
+        checkProStatus();
     }
 }); 

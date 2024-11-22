@@ -67,17 +67,22 @@ ul {
 
 li {
     font-size: 12px;
-    padding: 4px 0;
-    border: none;
-    list-style: none;
     line-height: 1.4;
-    padding: 8px 0;
+    padding: 6px 0;
     border-bottom: 1px solid rgba(60, 60, 67, 0.1);
     color: #3C3C43;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 li:last-child {
     border-bottom: none;
+}
+
+.usage-section {
+    text-align: center;
+    margin: 12px 0 4px;
 }
 
 .usage-section p {
@@ -125,8 +130,19 @@ footer p {
 
 .pro-section {
     position: absolute;
-    right: 20px;
-    top: 10px;
+    right: 16px;
+    top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.pro-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
 }
 
 .pro-badge {
@@ -134,81 +150,278 @@ footer p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
+    background: linear-gradient(135deg, #D1D1D6, #C7C7CC);
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    padding: 4px 8px;
+    padding: 3px 6px;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.pro-badge:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, #FFE55C, #FFB347);
-    color: white;
-}
-
-.pro-tooltip {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 8px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    font-size: 10px;
-    padding: 4px 8px;
-    border-radius: 4px;
+.unlock-section {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 20px;
+    margin-top: 2px;
     opacity: 0;
-    visibility: hidden;
+    transform: translateY(-2px);
     transition: all 0.3s ease;
-    white-space: nowrap;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    z-index: 2;
 }
 
-.pro-badge:hover + .pro-tooltip {
+.pro-wrapper:hover .unlock-section:not(.hidden),
+.unlock-section:focus-within:not(.hidden) {
     opacity: 1;
-    visibility: visible;
     transform: translateY(0);
 }
 
+.unlock-input {
+    width: 64px;
+    height: 18px;
+    background: white;
+    border: 1px solid rgba(255, 138, 76, 0.3);
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 10px;
+    color: #FF8A4C;
+    outline: none;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: monospace;
+}
+
+.unlock-input:focus {
+    width: 72px;
+    border-color: rgba(255, 138, 76, 0.8);
+    box-shadow: 0 0 0 2px rgba(255, 138, 76, 0.1);
+}
+
+.unlock-button {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: none;
+    background: white;
+    color: #8E8E93;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.unlock-input:valid + .unlock-button {
+    opacity: 1;
+    visibility: visible;
+    color: #34C759;
+}
+
+.unlock-button:hover {
+    background: rgba(52, 199, 89, 0.1);
+}
+
+/* Pro 激活状态 */
+.pro-badge.active {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+}
+
+/* 错误状态 */
+.unlock-input.error {
+    border-color: #FF3B30;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* 修改兑换码区域样式 */
+.redeem-section {
+    text-align: center;
+    margin: 4px 0 12px;
+}
+
+.redeem-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.redeem-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #8E8E93;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.redeem-button:hover {
+    color: #FF8A4C;
+    background: transparent;
+}
+
+.redeem-icon {
+    font-size: 14px;
+}
+
+.redeem-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.redeem-wrapper.show .redeem-input-wrapper {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.unlock-input {
+    width: 80px;
+    height: 24px;
+    background: white;
+    border: 1px solid rgba(255, 138, 76, 0.3);
+    border-radius: 4px;
+    padding: 0 8px;
+    font-size: 12px;
+    color: #FF8A4C;
+    outline: none;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: monospace;
+}
+
+.unlock-input:focus {
+    border-color: rgba(255, 138, 76, 0.8);
+    box-shadow: 0 0 0 2px rgba(255, 138, 76, 0.1);
+}
+
+.unlock-button {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: #8E8E93;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.unlock-input:valid + .unlock-button {
+    opacity: 1;
+    visibility: visible;
+    color: #34C759;
+}
+
+/* Pro 激活状态 */
+.pro-badge.active {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    pointer-events: none;
+}
+
+/* Pro 激活时隐藏兑换区域 */
+.pro-badge.active ~ .redeem-section,
+.pro-badge.active ~ .redeem-wrapper {
+    display: none !important;
+}
+
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .redeem-button {
+        background: rgba(255, 138, 76, 0.15);
+    }
+
+    .redeem-button:hover {
+        background: rgba(255, 138, 76, 0.2);
+    }
+
+    .unlock-input {
+        background: rgba(28, 28, 30, 0.95);
+        color: #FF8A4C;
+    }
+}
+
+/* 两列布局样式 */
 .info-section {
     display: flex;
     gap: 16px;
-    margin: 12px 0;
+    margin: 16px 0;
+    padding: 0 4px;
 }
 
 .features-column,
 .privacy-column {
     flex: 1;
+    min-width: 0;
 }
 
-.usage-section {
-    margin: 12px 0;
-    text-align: center;
+h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #FF8A4C;
 }
 
-.usage-section p {
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
     font-size: 12px;
-    color: #666;
-    margin: 0;
+    line-height: 1.4;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(60, 60, 67, 0.1);
+    color: #3C3C43;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-footer {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(60, 60, 67, 0.1);
+li:last-child {
+    border-bottom: none;
 }
 
-footer p {
-    font-size: 11px;
-    margin: 0;
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+    li {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+        color: #EBEBF0;
+    }
 } 
