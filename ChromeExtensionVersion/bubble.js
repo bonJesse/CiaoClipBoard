@@ -489,4 +489,57 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 // 在初始化和语言切换时更新文本
 document.addEventListener('DOMContentLoaded', () => {
     updateBubbleTexts();
+});
+
+// 修改初始化函数
+async function initializeBubble() {
+    try {
+        // 获取 Pro 状态
+        const { isPro } = await chrome.storage.local.get(['isPro']);
+        
+        // 创建气泡球
+        if (!document.getElementById('ciaoclipboard-bubble')) {
+            document.body.insertAdjacentHTML('beforeend', bubbleHTML);
+            
+            // 如果是 Pro 版本，立即显示 Pro 标识
+            if (isPro) {
+                const proBadge = document.querySelector('.pro-badge');
+                if (proBadge) {
+                    proBadge.classList.add('show');
+                }
+            }
+        }
+        
+        // 初始化其他功能
+        initializeEventListeners();
+        updateStats(false);
+    } catch (error) {
+        console.error('Error initializing bubble:', error);
+    }
+}
+
+// 添加消息监听器
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "updateProStatus") {
+        const proBadge = document.querySelector('.pro-badge');
+        if (proBadge) {
+            proBadge.classList.toggle('show', request.isPro);
+        }
+    }
+    return true;
+});
+
+// 在页面加载时初始化
+document.addEventListener('DOMContentLoaded', () => {
+    initializeBubble();
+});
+
+// 监听存储变化
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (namespace === 'local' && changes.isPro) {
+        const proBadge = document.querySelector('.pro-badge');
+        if (proBadge) {
+            proBadge.classList.toggle('show', changes.isPro.newValue);
+        }
+    }
 }); 

@@ -6,7 +6,8 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.local.set({
         bubbleVisible: true,
         usageCount: 0,
-        lastUsed: null
+        lastUsed: null,
+        isPro: false
     }).catch(error => {
         console.error('Installation storage error:', error);
     });
@@ -27,5 +28,22 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         } catch (error) {
             console.error('Error showing bubble:', error);
         }
+    }
+});
+
+// 添加标签页更新监听器
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === 'complete') {
+        // 当页面加载完成时，检查并同步 Pro 状态
+        chrome.storage.local.get(['isPro'], function(result) {
+            if (result.isPro) {
+                chrome.tabs.sendMessage(tabId, { 
+                    action: "updateProStatus", 
+                    isPro: true 
+                }).catch(() => {
+                    // 忽略错误，因为某些页面可能不支持内容脚本
+                });
+            }
+        });
     }
 }); 
