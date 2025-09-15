@@ -47,6 +47,5 @@
     "resources": ["icons/*.svg"],
     "matches": ["<all_urls>"]
   }],
-  "minimum_chrome_version": "88",
-  "privacy_policy": "https://github.com/bonJesse/CiaoClipBoard/blob/main/PRIVACY.md"
+  "minimum_chrome_version": "88"
 } 
