@@ -1,1 +1,15 @@
-{"appName":{"message":"CiaoClipBoard"},"appDesc":{"message":"Clear clipboard content with one click - Nothing left after 1 click"}}
+{
+  "appName": {"message": "CiaoClipBoard"},
+  "appDesc": {"message": "Clear clipboard content with one click - Nothing left after 1 click"},
+  "appShortDesc": {"message": "One-click clipboard cleaner"},
+  "clearClipboard": {"message": "Clear Clipboard"},
+  "clipboardCleared": {"message": "Clipboard cleared!"},
+  "usageStats": {"message": "Usage Statistics"},
+  "totalClears": {"message": "Total Clears"},
+  "todayClears": {"message": "Today"},
+  "settings": {"message": "Settings"},
+  "language": {"message": "Language"},
+  "theme": {"message": "Theme"},
+  "about": {"message": "About"},
+  "privacy": {"message": "Privacy Policy"}
+}

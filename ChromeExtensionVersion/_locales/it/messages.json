@@ -1,1 +1,15 @@
-{"appName":{"message":"CiaoClipBoard"},"appDesc":{"message":"Pulisci gli appunti con un clic - Niente rimane dopo un clic"}}
+{
+  "appName": {"message": "CiaoClipBoard"},
+  "appDesc": {"message": "Pulisci gli appunti con un clic - Niente rimane dopo un clic"},
+  "appShortDesc": {"message": "Pulitore clipboard con un clic"},
+  "clearClipboard": {"message": "Pulisci Clipboard"},
+  "clipboardCleared": {"message": "Clipboard pulita!"},
+  "usageStats": {"message": "Statistiche Utilizzo"},
+  "totalClears": {"message": "Pulizie Totali"},
+  "todayClears": {"message": "Oggi"},
+  "settings": {"message": "Impostazioni"},
+  "language": {"message": "Lingua"},
+  "theme": {"message": "Tema"},
+  "about": {"message": "Informazioni"},
+  "privacy": {"message": "Politica Privacy"}
+}
