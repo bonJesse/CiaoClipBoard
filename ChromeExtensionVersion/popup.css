@@ -104,6 +104,60 @@ footer p {
     margin: 0;
 }
 
+/* 自动清洁状态指示 */
+.settings-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.status-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 4px;
+}
+
+.status-label {
+    font-size: 11px;
+    color: #8E8E93;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(60,60,67,0.06);
+}
+
+.status-indicator .ring {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px rgba(52,199,89,0.0);
+    border: 2px solid rgba(52,199,89,0.6);
+    background: rgba(52,199,89,0.15);
+}
+
+.status-indicator.off .ring {
+    border-color: rgba(142,142,147,0.5);
+    background: transparent;
+}
+
+.status-text {
+    font-size: 11px;
+    color: #3C3C43;
+}
+
+@media (prefers-color-scheme: dark) {
+    .status-label { color: rgba(235,235,240,0.7); }
+    .status-indicator { background: rgba(255,255,255,0.06); }
+    .status-text { color: rgba(235,235,240,0.9); }
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background: #1C1C1E;
@@ -429,22 +483,23 @@ li:last-child {
 /* 语言切换按钮样式 */
 .lang-switch {
     position: absolute;
-    left: 16px;
-    top: 12px;
+    left: 2px;
+    top: 10px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     font-size: 12px;
 }
 
 .lang-btn {
     background: none;
     border: none;
-    padding: 2px 4px;
+    padding: 2px 6px;
     color: #8E8E93;
     cursor: pointer;
-    font-size: 12px;
-    transition: all 0.3s ease;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.35s ease;
 }
 
 .lang-btn:hover {
@@ -453,7 +508,7 @@ li:last-child {
 
 .lang-btn.active {
     color: #FF8A4C;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .lang-switch span {

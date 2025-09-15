@@ -15,7 +15,7 @@ const i18n = {
         noTracking: '🚫 No tracking',
         usageHint: '💡 Click bubble to clear, drag to reposition',
         redeemCode: '🎁 Redeem Code',
-        footer: '© 2024 CiaoClipBoard - Privacy First',
+        footer: '© 2025 CiaoClipBoard - Privacy First',
         bubbleVisible: 'Bubble is visible',
         clickToShow: 'Click to show bubble',
         proActivated: '✨ PRO Activated!',
@@ -26,7 +26,13 @@ const i18n = {
         lastUsed: 'Last Used:',
         never: 'Never',
         cleared: 'Cleared!',
-        supportUs: 'Support us!'
+        supportUs: 'Support us!',
+        settingsTitle: 'Settings',
+        autoClearLabel: 'Auto clear clipboard',
+        autoClearOff: 'Off',
+        autoClear1m: '1 minute',
+        autoClear5m: '5 minutes',
+        settingsApply: 'Apply'
     },
     zh: {
         title: 'CiaoClipBoard',
@@ -43,7 +49,7 @@ const i18n = {
         noTracking: '🚫 无跟踪记录',
         usageHint: '💡 点击气泡清理，拖动改变位置',
         redeemCode: '🎁 兑换码',
-        footer: '© 2024 CiaoClipBoard - 隐私优先',
+        footer: '© 2025 CiaoClipBoard - 隐私优先',
         bubbleVisible: '气泡已显示',
         clickToShow: '点击显示气泡',
         proActivated: '✨ PRO 已激活！',
@@ -54,7 +60,49 @@ const i18n = {
         lastUsed: '上次使用：',
         never: '从未使用',
         cleared: '已清理！',
-        supportUs: '支持我们！'
+        supportUs: '支持我们！',
+        settingsTitle: '设置',
+        autoClearLabel: '自动清理剪贴板',
+        autoClearOff: '关闭',
+        autoClear1m: '1 分钟',
+        autoClear5m: '5 分钟',
+        settingsApply: '应用',
+        autoClearStatusLabel: '自动清洁模式'
+    },
+    it: {
+        title: 'CiaoClipBoard',
+        subtitle: 'Niente rimane dopo un clic',
+        features: 'Funzioni',
+        privacy: 'Privacy',
+        oneClickCleaning: '✨ Pulizia con un clic',
+        instantFeedback: '🎯 Feedback immediato',
+        draggableBubble: '🔄 Bolla trascinabile',
+        usageTracking: '📊 Conteggio utilizzi',
+        noDataCollection: '🔒 Nessuna raccolta dati',
+        localStorage: '💾 Solo archiviazione locale',
+        completePrivacy: '🛡️ Privacy totale',
+        noTracking: '🚫 Nessun tracciamento',
+        usageHint: '💡 Clicca la bolla per pulire, trascina per spostare',
+        redeemCode: '🎁 Codice',
+        footer: '© 2025 CiaoClipBoard - Privacy First',
+        bubbleVisible: 'La bolla è visibile',
+        clickToShow: 'Clicca per mostrare la bolla',
+        proActivated: '✨ PRO Attivato!',
+        invalidCode: '❌ Codice non valido',
+        proTooltip: 'Sostienici!',
+        clickClear: 'Pulizia 1-Clic',
+        timesUsed: 'Utilizzi:',
+        lastUsed: 'Ultimo uso:',
+        never: 'Mai',
+        cleared: 'Pulito!',
+        supportUs: 'Sostienici!',
+        settingsTitle: 'Impostazioni',
+        autoClearLabel: 'Pulizia automatica degli appunti',
+        autoClearOff: 'Disattivato',
+        autoClear1m: '1 minuto',
+        autoClear5m: '5 minuti',
+        settingsApply: 'Applica',
+        autoClearStatusLabel: 'Modalità pulizia automatica'
     }
 };
 
@@ -123,6 +171,58 @@ function updateTexts() {
     });
 }
 
+// 初始化/绑定 自动清理设置
+function initAutoClearSetting() {
+    const select = document.getElementById('autoClearSelect');
+    const applyBtn = document.getElementById('applyAutoClearBtn');
+    const statusEl = document.getElementById('autoClearStatus');
+    if (!select) return;
+
+    // 读取并回显
+    chrome.storage.sync.get(['settings'], (res) => {
+        const intervalMs = res.settings?.autoClearClipboardMs ?? 0;
+        select.value = String(intervalMs);
+        if (applyBtn) applyBtn.disabled = true;
+        updateStatusIndicator(statusEl, intervalMs);
+    });
+
+    // 选择变化 → 允许点击“应用”
+    select.addEventListener('change', () => {
+        if (applyBtn) applyBtn.disabled = false;
+    });
+
+    // 点击“应用”后再保存并通知后台
+    if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            const intervalMs = parseInt(select.value, 10) || 0;
+            const settings = { autoClearClipboardMs: intervalMs };
+            chrome.storage.sync.set({ settings }, () => {
+                chrome.runtime.sendMessage({ type: 'settings:update', settings });
+                applyBtn.disabled = true;
+                updateStatusIndicator(statusEl, intervalMs);
+            });
+        });
+    }
+}
+
+// 监听同步存储变化，外部变更时刷新状态小灯
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'sync' && changes.settings) {
+        const statusEl = document.getElementById('autoClearStatus');
+        const next = changes.settings.newValue?.autoClearClipboardMs || 0;
+        updateStatusIndicator(statusEl, next);
+    }
+});
+
+function updateStatusIndicator(statusEl, intervalMs) {
+    if (!statusEl) return;
+    const textEl = statusEl.querySelector('.status-text');
+    statusEl.classList.toggle('off', intervalMs === 0);
+    if (textEl) {
+        textEl.textContent = intervalMs === 0 ? 'off' : (intervalMs === 60000 ? '1' : '5');
+    }
+}
+
 // 在语言切换时更新所有文本
 document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -136,6 +236,8 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
         
         // 保存语言选择
         chrome.storage.local.set({ language: lang });
+        // 通知后台广播语言更新，使内容脚本（bubble）即时刷新
+        chrome.runtime.sendMessage({ type: 'language:update', lang });
         
         // 更新所有文本
         updateTexts();
@@ -146,16 +248,25 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 document.addEventListener('DOMContentLoaded', async () => {
     const { language, isPro } = await chrome.storage.local.get(['language', 'isPro']);
     
-    // 设置语言
+    // 设置语言（优先用户选择，其次系统语言，最后英文）
     if (language) {
         currentLang = language;
-        document.querySelector(`[data-lang="${language}"]`).classList.add('active');
+        const btn = document.querySelector(`[data-lang="${language}"]`);
+        if (btn) btn.classList.add('active');
     } else {
-        document.querySelector('[data-lang="en"]').classList.add('active');
+        const nav = (navigator.language || '').toLowerCase();
+        if (nav.startsWith('zh')) currentLang = 'zh';
+        else if (nav.startsWith('it')) currentLang = 'it';
+        else currentLang = 'en';
+        const btn = document.querySelector(`[data-lang="${currentLang}"]`);
+        if (btn) btn.classList.add('active');
     }
     
     // 更新所有文本
     updateTexts();
+
+    // 初始化自动清理设置
+    initAutoClearSetting();
     
     // 更新 Pro 状态
     if (isPro) {

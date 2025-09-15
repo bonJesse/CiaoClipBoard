@@ -5,7 +5,8 @@
   "description": "Clear clipboard content with one click - Nothing left after 1 click",
   "permissions": [
     "clipboardWrite",
-    "storage"
+    "storage",
+    "alarms"
   ],
   "background": {
     "service_worker": "background.js"
@@ -38,6 +39,7 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
+  "default_locale": "en",
   "web_accessible_resources": [{
     "resources": ["icons/*.svg"],
     "matches": ["<all_urls>"]

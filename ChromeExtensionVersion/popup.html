@@ -14,6 +14,8 @@
                 <button class="lang-btn" data-lang="en">EN</button>
                 <span>/</span>
                 <button class="lang-btn" data-lang="zh">中</button>
+                <span>/</span>
+                <button class="lang-btn" data-lang="it">IT</button>
             </div>
 
             <!-- Logo Section -->
@@ -58,6 +60,24 @@
 
         <h1 data-i18n="title">CiaoClipBoard</h1>
         <p class="subtitle" data-i18n="subtitle">Nothing left after 1 click</p>
+
+        <!-- 设置：自动清理剪贴板 -->
+        <div class="settings-section">
+            <label for="autoClearSelect" data-i18n="autoClearLabel">Auto clear clipboard</label>
+            <select id="autoClearSelect">
+                <option value="0" data-i18n="autoClearOff">Off</option>
+                <option value="60000" data-i18n="autoClear1m">1 minute</option>
+                <option value="300000" data-i18n="autoClear5m">5 minutes</option>
+            </select>
+            <button id="applyAutoClearBtn" disabled data-i18n="settingsApply">Apply</button>
+            <div class="status-wrap">
+                <span class="status-label" data-i18n="autoClearStatusLabel">Auto-clean mode</span>
+                <span id="autoClearStatus" class="status-indicator off" title="auto-clear status">
+                    <span class="ring"></span>
+                    <span class="status-text">off</span>
+                </span>
+            </div>
+        </div>
 
         <!-- 两列布局的 Features 和 Privacy -->
         <div class="info-section">
@@ -108,7 +128,7 @@
         </div>
 
         <footer>
-            <p data-i18n="footer">© 2024 CiaoClipBoard - Privacy First</p>
+            <p data-i18n="footer">© 2025 CiaoClipBoard - Privacy First</p>
         </footer>
     </div>
     <script src="popup.js"></script>
