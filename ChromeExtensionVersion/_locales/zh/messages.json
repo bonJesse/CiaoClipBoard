@@ -1,0 +1,15 @@
+{
+  "appName": {"message": "CiaoClipBoard"},
+  "appDesc": {"message": "一键清空剪贴板 - 点击即走"},
+  "appShortDesc": {"message": "一键剪贴板清理器"},
+  "clearClipboard": {"message": "清空剪贴板"},
+  "clipboardCleared": {"message": "剪贴板已清空！"},
+  "usageStats": {"message": "使用统计"},
+  "totalClears": {"message": "总清空次数"},
+  "todayClears": {"message": "今日"},
+  "settings": {"message": "设置"},
+  "language": {"message": "语言"},
+  "theme": {"message": "主题"},
+  "about": {"message": "关于"},
+  "privacy": {"message": "隐私政策"}
+}

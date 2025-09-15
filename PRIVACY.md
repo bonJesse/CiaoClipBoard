@@ -59,7 +59,7 @@ You have complete control over your data:
 
 2. Permissions:
    - Minimal required permissions
-   - Only `clipboardWrite` and `storage` permissions used
+   - Permissions used: `clipboardWrite`, `storage`, `alarms`
    - No unnecessary access rights
 
 3. Code Security:
@@ -74,8 +74,8 @@ You have complete control over your data:
 
 ## Contact
 For privacy concerns or questions:
-- GitHub Issues: [Project Issues Page]
-- Email: [Your Contact Email]
+- GitHub Issues: https://github.com/bonJesse/CiaoClipBoard/issues
+- Email: bxjesse@gmail.com
 
 ## Compliance
 This privacy policy is designed to be compliant with:
@@ -84,7 +84,7 @@ This privacy policy is designed to be compliant with:
 - California Consumer Privacy Act (CCPA)
 
 ## Last Updated
-[Current Date]
+2025-09-15
 
 ---
 
@@ -149,7 +149,7 @@ CiaoClipBoard 仅在本地存储最小化的使用统计数据：
 
 2. 权限：
    - 最小化所需权限
-   - 仅使用 `clipboardWrite` 和 `storage` 权限
+   - 使用的权限：`clipboardWrite`、`storage`、`alarms`
    - 无不必要的访问权限
 
 3. 代码安全：
@@ -164,8 +164,8 @@ CiaoClipBoard 仅在本地存储最小化的使用统计数据：
 
 ### 联系方式
 如有隐私问题或疑问：
-- GitHub Issues：[项目问题页面]
-- 电子邮件：[您的联系邮箱]
+- GitHub Issues：https://github.com/bonJesse/CiaoClipBoard/issues
+- 电子邮件：bxjesse@gmail.com
 
 ### 合规性
 本隐私政策符合：
@@ -174,4 +174,4 @@ CiaoClipBoard 仅在本地存储最小化的使用统计数据：
 - 加州消费者隐私法案 (CCPA)
 
 ### 最后更新
-[当前日期] 
+2025-09-15

@@ -11,6 +11,8 @@ chrome.runtime.onInstalled.addListener(() => {
     }).catch(error => {
         console.error('Installation storage error:', error);
     });
+    // 默认设置（自动清理关闭）
+    chrome.storage.sync.set({ settings: { autoClearClipboardMs: 0 } }).catch(() => {});
 });
 
 // 处理来自 popup 的消息
@@ -27,6 +29,28 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             }
         } catch (error) {
             console.error('Error showing bubble:', error);
+        }
+    }
+    // 设置更新
+    if (request.type === 'settings:update' && request.settings) {
+        try {
+            await chrome.storage.sync.set({ settings: request.settings });
+            resetAutoClearTimer(request.settings.autoClearClipboardMs || 0);
+        } catch (e) {
+            console.error('Failed to update settings from popup:', e);
+        }
+    }
+    // 语言更新：广播到所有标签页
+    if (request.type === 'language:update' && request.lang) {
+        try {
+            const tabs = await chrome.tabs.query({});
+            await Promise.all(tabs.map(tab => {
+                if (tab.id) {
+                    return chrome.tabs.sendMessage(tab.id, { action: 'language:update', lang: request.lang }).catch(() => {});
+                }
+            }));
+        } catch (e) {
+            console.error('Broadcast language update error:', e);
         }
     }
 });
@@ -47,3 +71,53 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         });
     }
 }); 
+
+// 使用 chrome.alarms 进行定时，兼容 MV3 service worker 挂起
+async function performClipboardClearOnce() {
+    try {
+        // 通过向所有激活的标签页广播执行清理
+        const tabs = await chrome.tabs.query({});
+        await Promise.all(tabs.map(tab => {
+            if (tab.id) {
+                return chrome.tabs.sendMessage(tab.id, { action: 'autoClearClipboard' }).catch(() => {});
+            }
+        }));
+    } catch (e) {
+        console.error('Auto clear broadcast error:', e);
+    }
+}
+
+function resetAutoClearTimer(intervalMs) {
+    // 清除已有闹钟
+    chrome.alarms.clear('autoClearClipboard');
+    if (!intervalMs || intervalMs <= 0) return;
+    // 使用周期性闹钟（分钟为单位）
+    const minutes = Math.max(1, Math.round(intervalMs / 60000));
+    chrome.alarms.create('autoClearClipboard', { periodInMinutes: minutes, delayInMinutes: minutes });
+}
+
+// 启动时根据设置初始化定时器
+(async function initAutoClearFromSettings() {
+    try {
+        const { settings } = await chrome.storage.sync.get(['settings']);
+        const intervalMs = settings?.autoClearClipboardMs || 0;
+        resetAutoClearTimer(intervalMs);
+    } catch (e) {
+        console.error('Init auto clear settings error:', e);
+    }
+})();
+
+// 监听 storage 同步变化，双通道保证
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'sync' && changes.settings) {
+        const next = changes.settings.newValue?.autoClearClipboardMs || 0;
+        resetAutoClearTimer(next);
+    }
+});
+
+// 监听闹钟触发
+chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === 'autoClearClipboard') {
+        performClipboardClearOnce();
+    }
+});

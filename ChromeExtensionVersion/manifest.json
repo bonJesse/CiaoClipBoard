@@ -1,11 +1,15 @@
 {
   "manifest_version": 3,
   "name": "CiaoClipBoard",
-  "version": "1.0",
+  "short_name": "CiaoClip",
+  "version": "1.2",
   "description": "Clear clipboard content with one click - Nothing left after 1 click",
+  "author": "JesseNoCode",
+  "homepage_url": "https://buymeacoffee.com/jesuisjesse",
   "permissions": [
     "clipboardWrite",
-    "storage"
+    "storage",
+    "alarms"
   ],
   "background": {
     "service_worker": "background.js"
@@ -38,6 +42,7 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
+  "default_locale": "en",
   "web_accessible_resources": [{
     "resources": ["icons/*.svg"],
     "matches": ["<all_urls>"]

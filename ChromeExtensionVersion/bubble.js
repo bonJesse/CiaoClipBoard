@@ -157,6 +157,19 @@ async function updateStats(shouldCount = false) {
 // Add clear button listener
 clearButton.addEventListener('click', clearClipboard);
 
+// 接收后台自动清理指令
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'autoClearClipboard') {
+        clearClipboard();
+    }
+    if (request.action === 'language:update' && request.lang) {
+        // 保存语言并立即刷新气泡文案
+        chrome.storage.local.set({ language: request.lang }, () => {
+            updateBubbleTexts();
+        });
+    }
+});
+
 // 修改拖拽相关变量，使用更清晰的命名
 let isDragging = false;
 let startMouseX = 0;
@@ -398,13 +411,25 @@ const bubbleI18n = {
         never: '从未使用',
         cleared: '已清理！'
     }
+    ,
+    it: {
+        clickClear: 'Pulizia 1-Clic',
+        timesUsed: 'Utilizzi:',
+        lastUsed: 'Ultimo uso:',
+        never: 'Mai',
+        cleared: 'Pulito!'
+    }
 };
 
 // 获取当前语言
 async function getCurrentLanguage() {
     try {
         const { language } = await chrome.storage.local.get(['language']);
-        return language || 'en';
+        if (language) return language;
+        const nav = (navigator.language || '').toLowerCase();
+        if (nav.startsWith('zh')) return 'zh';
+        if (nav.startsWith('it')) return 'it';
+        return 'en';
     } catch (error) {
         console.error('Error getting language:', error);
         return 'en';
